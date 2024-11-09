@@ -1,4 +1,4 @@
-const list = document.querySelector(".list");
+export const list = document.querySelector(".list");
 
 export function formResults(images) {
     const markup = images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
@@ -14,7 +14,5 @@ export function formResults(images) {
             </div>
         </div>
     `).join("");
-
-    list.innerHTML = "";
     list.insertAdjacentHTML("beforeend", markup);
 }

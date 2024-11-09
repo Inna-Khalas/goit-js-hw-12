@@ -5,19 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./css/slyles.css">
-  <title>HomeWork-11</title>
+  <title>HomeWork-12</title>
 </head>
 
 <body>
-  <div>
+  <div class="search-form-input">
     <form class="search-form">
       <input type="search" placeholder="Search images..." autofocus />
-      <button type="submit">Пошук</button>
+      <button type="submit" class="button">Пошук</button>
     </form>
     <div class="loader" style="display: none;"></div>
-
-
+  </div>
+  <div class="list-load-more">
     <ul class="list" style="padding-left: 0;"></ul>
+
+    <button type="button" class="load-more">Load more</button>
   </div>
 
   <script type="module" src="./main.js" defer></script>
