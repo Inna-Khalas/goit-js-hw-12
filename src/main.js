@@ -73,6 +73,7 @@ async function loadData(query, page) {
 }
 async function loadMoreImg() {
     page++;
+    loadMore.disabled = true;
     showLoader()
     await loadData(query, page);
     hideLoader()
@@ -96,6 +97,7 @@ function showLoadMoreBtn() {
         });
     } else {
         loadMore.style.display = "block";
+        loadMore.disabled = false;
     }
 }
 
