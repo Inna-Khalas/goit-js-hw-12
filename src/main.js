@@ -26,8 +26,8 @@ async function handleForm(event) {
     event.preventDefault();
 
     const inputValue = inputText.value.trim();
-
     list.innerHTML = "";
+
     if (inputValue === "") {
         return iziToast.info({
             position: 'topRight',
@@ -43,41 +43,50 @@ async function handleForm(event) {
     loadedHits = 0;
     list.innerHTML = "";
 
-
     showLoader();
     await loadData(query, page);
-    hideLoader()
-    searchForm.reset()
+    hideLoader();
+    searchForm.reset();
 }
 
 async function loadData(query, page) {
     try {
         const data = await getData(query, page);
+
+        if (data.hits.length === 0) {
+            loadMore.style.display = "none";
+            iziToast.info({
+                message: 'По вашому запиту нічого не знайдено!',
+                position: 'topRight'
+            });
+            return;
+        }
+
         totalHits = data.totalHits;
-        loadedHits = data.hits.length;
+        loadedHits += data.hits.length;
 
         formResults(data.hits);
         setupLightbox();
-        showLoadMoreBtn();
 
         if (page > 1) {
             scrollPage();
         }
+        showLoadMoreBtn();
+
     } catch (error) {
         iziToast.error({
             position: "topLeft",
             message: "Упс...помилка"
         });
-
     }
 }
+
 async function loadMoreImg() {
     page++;
     loadMore.disabled = true;
-    showLoader()
+    showLoader();
     await loadData(query, page);
-    hideLoader()
-
+    hideLoader();
 }
 
 function showLoader() {
@@ -91,9 +100,9 @@ function hideLoader() {
 function showLoadMoreBtn() {
     if (loadedHits >= totalHits) {
         loadMore.style.display = "none";
-        iziToast.info({
+        iziToast.error({
             message: "Закінчились результати пошуку.",
-            position: 'topCenter',
+            position: 'topRight',
         });
     } else {
         loadMore.style.display = "block";
@@ -114,7 +123,6 @@ function setupLightbox() {
 
 function scrollPage() {
     const galleryItem = document.querySelector(".gallery-item");
-
     if (galleryItem) {
         const { height } = galleryItem.getBoundingClientRect();
         window.scrollBy({

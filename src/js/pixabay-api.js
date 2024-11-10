@@ -20,10 +20,7 @@ export async function getData(inputValue, page = 1, per_page = 15) {
         console.log(data);
 
         if (data.hits.length === 0) {
-            iziToast.info({
-                title: 'По вашому запиту нічого не знайдено!',
-                position: 'topRight'
-            });
+            return { hits: [] };
         }
         return data;
     } catch (error) {
@@ -33,6 +30,6 @@ export async function getData(inputValue, page = 1, per_page = 15) {
             message: 'Спробуйте ще раз!',
             position: 'topRight'
         });
-        return [];
+        return { hits: [] };;
     }
 }
